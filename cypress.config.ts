@@ -1,17 +1,24 @@
-import { defineConfig } from 'cypress'
+// cypress.config.ts
+import { defineConfig } from "cypress";
+import { cloudPlugin } from "cypress-cloud/plugin";
 
 export default defineConfig({
-  viewportHeight: 1000,
-  viewportWidth: 1280,
-  env: {
-    mobileViewportWidthBreakpoint: 414,
-  },
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.ts').default(on, config)
+    reporter: 'junit',
+    reporterOptions: {
+      mochaFile: 'results/cypress-results-[hash].xml',
+      toConsole: true,
     },
     baseUrl: 'http://localhost:3000',
+    video: true,
+    videoCompression: 32,
+    screenshotOnRunFailure: true,
+    specPattern: "cypress/e2e/*.cy.ts",
+    async setupNodeEvents(on: any, config: any) {
+      const result = await cloudPlugin(on, config);
+      return result;
+    },
   },
-})
+  screenshotsFolder: 'results/screenshots',
+  videosFolder: 'results/videos',
+});

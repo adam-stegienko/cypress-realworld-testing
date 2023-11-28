@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://learn.cypress.io
+Host: undefined
 
 # Sitemaps
-Sitemap: https://learn.cypress.io/sitemap.xml
+Sitemap: undefined/sitemap.xml
